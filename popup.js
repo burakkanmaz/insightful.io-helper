@@ -19,6 +19,90 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Helper function to parse time string to hours
+  function parseTimeToHours(timeStr) {
+    if (!timeStr || timeStr === '-') return 0;
+    
+    // Handle different time formats: "1:20", "8:06", "25:15", "49:25", "176:02"
+    if (timeStr.includes(':')) {
+      const parts = timeStr.split(':');
+      if (parts.length === 2) {
+        const hours = parseInt(parts[0]) || 0;
+        const minutes = parseInt(parts[1]) || 0;
+        return hours + (minutes / 60);
+      }
+    }
+    
+    // Parse formats like "8h 30m", "5h", "45m", "2h 15m"
+    const hourMatch = timeStr.match(/(\d+)h/);
+    const minuteMatch = timeStr.match(/(\d+)m/);
+    
+    const hours = hourMatch ? parseInt(hourMatch[1]) : 0;
+    const minutes = minuteMatch ? parseInt(minuteMatch[1]) : 0;
+    
+    return hours + (minutes / 60);
+  }
+
+  // Helper function to calculate working days in a month (excluding weekends)
+  function getWorkingDaysInMonth(year, month) {
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    let workingDays = 0;
+    
+    for (let day = 1; day <= daysInMonth; day++) {
+      const date = new Date(year, month, day);
+      const dayOfWeek = date.getDay();
+      // Monday = 1, Tuesday = 2, ..., Friday = 5 (exclude Saturday = 6, Sunday = 0)
+      if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+        workingDays++;
+      }
+    }
+    
+    return workingDays;
+  }
+
+  // Helper function to calculate total hours based on period type
+  function calculateTotalHours(period) {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+    
+    switch (period) {
+      case 'today':
+      case 'yesterday':
+        return 8; // 1 day = 8 hours
+      case 'week':
+      case 'lastWeek':
+        return 40; // 5 days = 40 hours
+      case 'month':
+        // This month's working days
+        return getWorkingDaysInMonth(currentYear, currentMonth) * 8;
+      case 'lastMonth':
+        // Last month's working days
+        const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+        const lastMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+        return getWorkingDaysInMonth(lastMonthYear, lastMonth) * 8;
+      default:
+        return 8;
+    }
+  }
+
+  // Helper function to calculate progress percentage
+  function calculateProgress(workTime, totalHours) {
+    const workedHours = parseTimeToHours(workTime);
+    if (totalHours === 0) return 0;
+    return Math.round((workedHours / totalHours) * 100);
+  }
+
+  // Helper function to create progress bar HTML
+  function createProgressBar(percentage) {
+    return `
+      <div>${percentage}%</div>
+      <div class="progress-container">
+        <div class="progress-bar" style="width: ${Math.min(percentage, 100)}%"></div>
+      </div>
+    `;
+  }
+
   function formatTimeAgo(timestamp) {
     if (!timestamp) return '';
     const now = new Date();
@@ -137,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (profileErrorMsg && profileErrorMsg.trim() !== 'User Profile:') errorMessageDiv.classList.remove('hidden');
       }
 
+      // Set work and idle times
       document.getElementById('todayWork').textContent = data.today?.work || '-';
       document.getElementById('todayIdle').textContent = data.today?.idle || '-';
       document.getElementById('yesterdayWork').textContent = data.yesterday?.work || '-';
@@ -149,6 +234,36 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('lastWeekIdle').textContent = data.lastWeek?.idle || '-';
       document.getElementById('lastMonthWork').textContent = data.lastMonth?.work || '-';
       document.getElementById('lastMonthIdle').textContent = data.lastMonth?.idle || '-';
+
+      // Calculate and set total hours
+      const todayTotal = calculateTotalHours('today');
+      const yesterdayTotal = calculateTotalHours('yesterday');
+      const weekTotal = calculateTotalHours('week');
+      const lastWeekTotal = calculateTotalHours('lastWeek');
+      const monthTotal = calculateTotalHours('month');
+      const lastMonthTotal = calculateTotalHours('lastMonth');
+
+      document.getElementById('todayTotal').textContent = `${todayTotal}h`;
+      document.getElementById('yesterdayTotal').textContent = `${yesterdayTotal}h`;
+      document.getElementById('weekTotal').textContent = `${weekTotal}h`;
+      document.getElementById('lastWeekTotal').textContent = `${lastWeekTotal}h`;
+      document.getElementById('monthTotal').textContent = `${monthTotal}h`;
+      document.getElementById('lastMonthTotal').textContent = `${lastMonthTotal}h`;
+
+      // Calculate and set progress percentages with visual bars
+      const todayProgress = calculateProgress(data.today?.work, todayTotal);
+      const yesterdayProgress = calculateProgress(data.yesterday?.work, yesterdayTotal);
+      const weekProgress = calculateProgress(data.thisWeek?.work, weekTotal);
+      const lastWeekProgress = calculateProgress(data.lastWeek?.work, lastWeekTotal);
+      const monthProgress = calculateProgress(data.thisMonth?.work, monthTotal);
+      const lastMonthProgress = calculateProgress(data.lastMonth?.work, lastMonthTotal);
+
+      document.getElementById('todayProgress').innerHTML = createProgressBar(todayProgress);
+      document.getElementById('yesterdayProgress').innerHTML = createProgressBar(yesterdayProgress);
+      document.getElementById('weekProgress').innerHTML = createProgressBar(weekProgress);
+      document.getElementById('lastWeekProgress').innerHTML = createProgressBar(lastWeekProgress);
+      document.getElementById('monthProgress').innerHTML = createProgressBar(monthProgress);
+      document.getElementById('lastMonthProgress').innerHTML = createProgressBar(lastMonthProgress);
 
       utilizationTable.classList.remove('hidden');
       // errorMessageDiv.classList.add('hidden'); // Keep error visible if it's just a profile error
