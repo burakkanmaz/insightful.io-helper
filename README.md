@@ -8,7 +8,7 @@ This is a Chrome extension designed to enhance your experience on the insightful
 2.  **Refresh the Page if You Encounter Issues:** If you experience any problems with the extension, please try refreshing the page first.
 3.  **Pin the Extension:** For easy access, we recommend pinning the extension to your Chrome toolbar.
 
-    ![Extension Screenshot](images/screenshot.png)
+    ![Extension Screenshot](images/ss.png)
 
 ## Privacy
 
