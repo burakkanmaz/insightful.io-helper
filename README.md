@@ -2,6 +2,8 @@
 
 This is a Chrome extension designed to enhance your experience on the insightful.io website.
 
+Download the extension from the [Chrome Web Store](https://chromewebstore.google.com/detail/insightfulio-helper/daiecfjhhhcdfpebcjglpaghendlaekf?authuser=4&hl=en).
+
 ## User Guide
 
 1.  **Log In:** Before you start using the extension, make sure you are logged into [insightful.io](https://insightful.io).
