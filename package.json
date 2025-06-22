@@ -1,0 +1,17 @@
+{
+  "name": "insightful.io-helper",
+  "version": "1.0.0",
+  "description": "A Chrome extension to quickly view your Insightful.io stats.",
+  "scripts": {
+    "clean": "rimraf dist build",
+    "copy": "mkdirp dist && mkdirp build && cpy manifest.json rules.json background.js popup.html popup.js content.js images dist/",
+    "zip": "powershell Compress-Archive -Path .\\dist\\* -DestinationPath .\\build\\insightful.io-helper.zip -Force",
+    "build": "npm run clean && npm run copy && npm run zip"
+  },
+  "devDependencies": {
+    "cpy-cli": "^5.0.0",
+    "cross-zip": "^4.0.1",
+    "mkdirp": "^3.0.1",
+    "rimraf": "^5.0.10"
+  }
+}
