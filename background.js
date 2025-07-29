@@ -468,6 +468,76 @@ async function fetchUserProfile() {
   }
 }
 
+// Updated fetchScreenshots with authentication
+async function fetchScreenshots(start, end) {
+  const tokenInfo = await getAccessToken();
+  if (!tokenInfo || !tokenInfo.value) {
+    return {
+      data: null,
+      error: tokenInfo?.errorDetail || "Token acquisition failed for screenshots. Check configuration or logs.",
+    };
+  }
+  const token = tokenInfo.value;
+  const url = `https://app.insightful.io/api/v1/insights/screenshot-paginate?start=${start}&end=${end}&limit=150&sortOrder=desc`;
+  
+  console.log('Background: Fetching screenshots from URL:', url);
+  console.log('Background: Request range:', {
+    start: new Date(start).toISOString(),
+    end: new Date(end).toISOString(),
+    startTimestamp: start,
+    endTimestamp: end
+  });
+  
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        accept: "application/json, text/plain, */*",
+        authorization: `Bearer ${token}`,
+        origin: "https://app.insightful.io",
+        referer: "https://app.insightful.io/",
+        "sec-ch-ua": '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": '"Windows"',
+        "sec-fetch-dest": "empty",
+        "sec-fetch-mode": "cors",
+        "sec-fetch-site": "same-origin",
+        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+      },
+      credentials: "include",
+    });
+    
+    if (!response.ok) {
+      let errorMessage = `Screenshots API Error ${response.status}`;
+      if (response.status === 401) {
+        errorMessage = "Unauthorized. Check your token for screenshots.";
+      }
+      console.error('Background: API error:', errorMessage);
+      return { data: null, error: errorMessage };
+    }
+    
+    const data = await response.json();
+    console.log('Background: Raw API response:', {
+      dataLength: data.data ? data.data.length : 0,
+      firstScreenshot: data.data && data.data.length > 0 ? {
+        timestamp: data.data[0].timestamp,
+        date: new Date(data.data[0].timestamp).toISOString(),
+        localDate: new Date(data.data[0].timestamp).toLocaleString(),
+        app: data.data[0].app,
+        title: data.data[0].title
+      } : null
+    });
+    
+    return { data: data.data || [], error: null };
+  } catch (error) {
+    console.error('Background: Network error:', error);
+    return {
+      data: null,
+      error: error?.message || String(error),
+    };
+  }
+}
+
 // Message listeners remain the same
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "getTimes") {
@@ -491,6 +561,27 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         });
       });
     return true;
+  }
+
+  if (request.action === "getScreenshots") {
+    const { start, end } = request;
+    
+    fetchScreenshots(start, end)
+      .then((result) => {
+        if (result.error) {
+          sendResponse({ data: null, error: result.error });
+        } else {
+          sendResponse({ data: result.data, error: null });
+        }
+      })
+      .catch((error) => {
+        sendResponse({
+          data: null,
+          error: error?.message || String(error),
+        });
+      });
+    
+    return true; // Keep the message channel open
   }
 
   if (request.action === "getAggregatedTimes") {

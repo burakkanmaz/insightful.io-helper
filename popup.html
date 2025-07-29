@@ -6,14 +6,18 @@
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-      min-width: 420px; /* Made wider to accommodate new columns */
-      padding: 5px 15px;
-      text-align: left; /* Align most text to left for readability */
-      background-color: #f9f9f9; /* Light gray background */
-      color: #333; /* Dark gray text color */
+      min-width: 480px;
+      min-height: 800px;
+      height: auto;
+      padding: 10px 15px;
+      text-align: left;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 0;
+      overflow: hidden;
     }
     h3#popupTitle {
-      color: #5e35b1; /* Deep purple for title - approximating Insightful's purple */
+      color: #5e35b1;
       font-size: 18px;
       font-weight: 600;
       margin-bottom: 5px;
@@ -21,33 +25,155 @@
     }
     #userName {
       font-size: 13px;
-      color: #424242; /* Slightly lighter dark gray */
+      color: #424242;
       margin-bottom: 15px;
       text-align: center;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      background-color: #fff; /* White background for table */
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Subtle shadow for depth */
-      border-radius: 4px; /* Rounded corners for table */
-      overflow: hidden; /* Ensures border-radius clips content */
+    
+    /* Tab Styles */
+    .tab-container {
+      margin-bottom: 15px;
     }
-    th, td {
-      border: 1px solid #e0e0e0; /* Lighter gray borders */
-      padding: 8px 10px; /* Adjusted padding */
-      text-align: left;
-      font-size: 12px;
-      white-space: nowrap; /* Prevent text wrapping */
+    .tab-buttons {
+      display: flex;
+      background-color: #fff;
+      border-radius: 8px 8px 0 0;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
-    th {
-      background-color: #f5f5f5; /* Very light gray for headers */
-      color: #5e35b1; /* Purple for header text */
+    .tab-button {
+      flex: 1;
+      padding: 12px 16px;
+      background-color: #f5f5f5;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      color: #666;
+      transition: all 0.2s ease;
+    }
+    .tab-button:hover {
+      background-color: #e8e8e8;
+    }
+    .tab-button.active {
+      background-color: #5e35b1;
+      color: #fff;
+    }
+    .tab-content {
+      display: none;
+      background-color: #fff;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .tab-content.active {
+      display: block;
+    }
+    
+    .segment {
+      margin-bottom: 15px;
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .segment-title {
+      font-size: 16px;
       font-weight: 600;
+      color: #5e35b1;
+      margin-bottom: 10px;
+      text-align: center;
+      border-bottom: 2px solid #5e35b1;
+      padding-bottom: 5px;
     }
-    td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5) { /* Align time values to the right */
-        text-align: right;
+    .period-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .period-row:last-child {
+      border-bottom: none;
+    }
+    .period-name {
+      font-weight: 500;
+      color: #333;
+      min-width: 80px;
+    }
+    .period-stats {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 50px;
+    }
+    .stat-label {
+      font-size: 10px;
+      color: #666;
+      margin-bottom: 2px;
+    }
+    .stat-value {
+      font-size: 12px;
+      font-weight: 500;
+      color: #333;
+    }
+    .progress-container {
+      width: 80px;
+      height: 6px;
+      background-color: #e0e0e0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 2px 0;
+    }
+    .progress-bar {
+      height: 100%;
+      background-color: #5e35b1;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    .progress-bar.over {
+      background-color: #4caf50;
+    }
+    .progress-bar.behind {
+      background-color: #ff9800;
+    }
+    .progress-bar.critical {
+      background-color: #f44336;
+    }
+    .progress-text {
+      font-size: 10px;
+      color: #666;
+      text-align: center;
+      margin-top: 2px;
+    }
+    .status-indicator {
+      font-size: 10px;
+      font-weight: 500;
+      padding: 2px 6px;
+      border-radius: 10px;
+      text-align: center;
+      min-width: 40px;
+    }
+    .status-on-track {
+      background-color: #e8f5e8;
+      color: #4caf50;
+    }
+    .status-behind {
+      background-color: #fff3e0;
+      color: #ff9800;
+    }
+    .status-critical {
+      background-color: #ffebee;
+      color: #f44336;
+    }
+    .status-ahead {
+      background-color: #e8f5e8;
+      color: #4caf50;
     }
     .loading {
       margin-top: 25px;
@@ -57,8 +183,8 @@
     }
     .error {
       margin-top: 20px;
-      color: #c62828; /* Darker red for errors */
-      background-color: #ffcdd2; /* Light red background for error message */
+      color: #c62828;
+      background-color: #ffcdd2;
       padding: 10px;
       border-radius: 4px;
       font-size: 13px;
@@ -69,122 +195,291 @@
     }
     #openDashboardButtonContainer {
       text-align: center;
-      margin-top: 15px; /* Adjusted margin */
-      margin-bottom: 10px; /* Added margin below button */
+      margin-top: 15px;
+      margin-bottom: 10px;
     }
     #openDashboardLink {
-      display: inline-block; /* To apply padding and other block-level styles */
-      background-color: #5e35b1; /* Purple background */
-      color: #ffffff; /* White text */
-      padding: 8px 16px; /* Padding for button feel */
+      display: inline-block;
+      background-color: #5e35b1;
+      color: #ffffff;
+      padding: 8px 16px;
       text-decoration: none;
       font-weight: 500;
       font-size: 13px;
-      border-radius: 4px; /* Rounded corners */
-      transition: background-color 0.2s ease-in-out; /* Smooth hover transition */
+      border-radius: 4px;
+      transition: background-color 0.2s ease-in-out;
     }
     #openDashboardLink:hover {
-      background-color: #4527a0; /* Darker purple on hover */
+      background-color: #4527a0;
     }
     #lastUpdatedTime {
       font-size: 11px;
       color: #757575;
-      margin-top: 10px; /* Adjusted margin */
+      margin-top: 10px;
       text-align: center;
     }
-    .progress-container {
-      width: 60px;
-      height: 8px;
-      background-color: #e0e0e0;
-      border-radius: 4px;
-      margin: 2px auto;
-      overflow: hidden;
+    .projection-info {
+      font-size: 10px;
+      color: #666;
+      margin-top: 5px;
+      text-align: center;
+      font-style: italic;
     }
-    .progress-bar {
-      height: 100%;
+    
+    /* Screenshots Tab Styles */
+    .screenshots-container {
+      padding: 15px;
+    }
+    .screenshot-period {
+      margin-bottom: 20px;
+    }
+    .screenshot-period-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #5e35b1;
+      margin-bottom: 10px;
+      text-align: center;
+      border-bottom: 2px solid #5e35b1;
+      padding-bottom: 5px;
+    }
+    .screenshot-group {
+      background-color: #f8f9fa;
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-left: 4px solid #5e35b1;
+    }
+    .screenshot-group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .screenshot-title {
+      font-weight: 500;
+      color: #333;
+      font-size: 13px;
+    }
+    .screenshot-count {
       background-color: #5e35b1;
-      border-radius: 4px;
-      transition: width 0.3s ease;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 500;
     }
-    .progress-cell {
+    .screenshot-last-date {
+      font-size: 11px;
+      color: #666;
+      font-style: italic;
+    }
+    .screenshots-loading {
       text-align: center;
-      vertical-align: middle;
+      padding: 20px;
+      color: #666;
+    }
+    .screenshots-error {
+      color: #c62828;
+      background-color: #ffcdd2;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 13px;
+      text-align: center;
+      margin: 10px;
     }
   </style>
 </head>
 <body>
-  <h3 id="popupTitle">Insightful.io Stats</h3>
+  <h3 id="popupTitle">Insightful.io Helper</h3>
   <div id="userName">-</div>
 
-  <div id="loading" class="loading">
-    Loading data...
-  </div>
+  <!-- Tab Container -->
+  <div class="tab-container">
+    <div class="tab-buttons">
+      <button class="tab-button active" data-tab="stats">Stats</button>
+      <button class="tab-button" data-tab="screenshots">Screenshots</button>
+    </div>
+    
+    <!-- Stats Tab Content -->
+    <div id="stats-tab" class="tab-content active">
+      <div id="loading" class="loading">
+        Loading data...
+      </div>
 
-  <table id="utilizationTable" class="hidden">
-    <thead>
-      <tr>
-        <th>Period</th>
-        <th>Work Time</th>
-        <th>Idle Time</th>
-        <th>Total</th>
-        <th>Progress</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Today</td>
-        <td id="todayWork">-</td>
-        <td id="todayIdle">-</td>
-        <td id="todayTotal">-</td>
-        <td id="todayProgress" class="progress-cell">-</td>
-      </tr>
-      <tr>
-        <td>Yesterday</td>
-        <td id="yesterdayWork">-</td>
-        <td id="yesterdayIdle">-</td>
-        <td id="yesterdayTotal">-</td>
-        <td id="yesterdayProgress" class="progress-cell">-</td>
-      </tr>
-      <tr>
-        <td>This Week</td>
-        <td id="weekWork">-</td>
-        <td id="weekIdle">-</td>
-        <td id="weekTotal">-</td>
-        <td id="weekProgress" class="progress-cell">-</td>
-      </tr>
-      <tr>
-        <td>Last Week</td>
-        <td id="lastWeekWork">-</td>
-        <td id="lastWeekIdle">-</td>
-        <td id="lastWeekTotal">-</td>
-        <td id="lastWeekProgress" class="progress-cell">-</td>
-      </tr>
-      <tr>
-        <td>This Month</td>
-        <td id="monthWork">-</td>
-        <td id="monthIdle">-</td>
-        <td id="monthTotal">-</td>
-        <td id="monthProgress" class="progress-cell">-</td>
-      </tr>
-      <tr>
-        <td>Last Month</td>
-        <td id="lastMonthWork">-</td>
-        <td id="lastMonthIdle">-</td>
-        <td id="lastMonthTotal">-</td>
-        <td id="lastMonthProgress" class="progress-cell">-</td>
-      </tr>
-    </tbody>
-  </table>
+      <div id="statsContainer" class="hidden">
+        <!-- Daily Segment -->
+        <div class="segment">
+          <div class="segment-title">Daily</div>
+          <div class="period-row">
+            <div class="period-name">Today</div>
+            <div class="period-stats">
+              <div class="stat-item">
+                <div class="stat-label">Worked</div>
+                <div class="stat-value" id="todayWork">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Idle</div>
+                <div class="stat-value" id="todayIdle">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Remaining</div>
+                <div class="stat-value" id="todayRemaining">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Progress</div>
+                <div class="progress-container">
+                  <div class="progress-bar" id="todayProgressBar"></div>
+                </div>
+                <div class="progress-text" id="todayProgressText">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Status</div>
+                <div class="status-indicator" id="todayStatus">-</div>
+              </div>
+            </div>
+          </div>
+          <div class="period-row">
+            <div class="period-name">Yesterday</div>
+            <div class="period-stats">
+              <div class="stat-item">
+                <div class="stat-label">Worked</div>
+                <div class="stat-value" id="yesterdayWork">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Idle</div>
+                <div class="stat-value" id="yesterdayIdle">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Target</div>
+                <div class="stat-value">8h</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Progress</div>
+                <div class="progress-container">
+                  <div class="progress-bar" id="yesterdayProgressBar"></div>
+                </div>
+                <div class="progress-text" id="yesterdayProgressText">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Status</div>
+                <div class="status-indicator" id="yesterdayStatus">-</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-  <div id="errorMessage" class="error hidden">
-    <!-- Error messages will be displayed here -->
-  </div>
+        <!-- Weekly Segment -->
+        <div class="segment">
+          <div class="segment-title">Weekly</div>
+          <div class="period-row">
+            <div class="period-name">This Week</div>
+            <div class="period-stats">
+              <div class="stat-item">
+                <div class="stat-label">Worked</div>
+                <div class="stat-value" id="weekWork">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Idle</div>
+                <div class="stat-value" id="weekIdle">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Remaining</div>
+                <div class="stat-value" id="weekRemaining">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Progress</div>
+                <div class="progress-container">
+                  <div class="progress-bar" id="weekProgressBar"></div>
+                </div>
+                <div class="progress-text" id="weekProgressText">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Status</div>
+                <div class="status-indicator" id="weekStatus">-</div>
+              </div>
+            </div>
+          </div>
+          <div class="projection-info" id="weekProjection">-</div>
+          <div class="projection-info" id="weekCapacityGap" style="margin-top: 5px; font-weight: 500;">-</div>
+        </div>
 
-  <div id="openDashboardButtonContainer">
-    <a href="#" id="openDashboardLink">Open Dashboard</a>
+        <!-- Monthly Segment -->
+        <div class="segment">
+          <div class="segment-title">Monthly</div>
+          <div class="period-row">
+            <div class="period-name">This Month</div>
+            <div class="period-stats">
+              <div class="stat-item">
+                <div class="stat-label">Worked</div>
+                <div class="stat-value" id="monthWork">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Idle</div>
+                <div class="stat-value" id="monthIdle">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Remaining</div>
+                <div class="stat-value" id="monthRemaining">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Progress</div>
+                <div class="progress-container">
+                  <div class="progress-bar" id="monthProgressBar"></div>
+                </div>
+                <div class="progress-text" id="monthProgressText">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Status</div>
+                <div class="status-indicator" id="monthStatus">-</div>
+              </div>
+            </div>
+          </div>
+          <div class="projection-info" id="monthProjection">-</div>
+          <div class="projection-info" id="monthCapacityGap" style="margin-top: 5px; font-weight: 500;">-</div>
+        </div>
+      </div>
+
+      <div id="errorMessage" class="error hidden">
+        <!-- Error messages will be displayed here -->
+      </div>
+
+      <div id="openDashboardButtonContainer">
+        <a href="#" id="openDashboardLink">Open Dashboard</a>
+      </div>
+      
+      <div id="lastUpdatedTime"></div>
+    </div>
+    
+    <!-- Screenshots Tab Content -->
+    <div id="screenshots-tab" class="tab-content">
+      <div class="screenshots-container">
+        <div id="screenshots-loading" class="screenshots-loading">
+          Loading screenshots...
+        </div>
+        
+        <div id="screenshots-content" class="hidden">
+          <div id="today-screenshots" class="screenshot-period">
+            <div class="screenshot-period-title">Today</div>
+            <div id="today-screenshots-list"></div>
+          </div>
+          
+          <div id="week-screenshots" class="screenshot-period">
+            <div class="screenshot-period-title">This Week</div>
+            <div id="week-screenshots-list"></div>
+          </div>
+          
+          <div id="month-screenshots" class="screenshot-period">
+            <div class="screenshot-period-title">This Month</div>
+            <div id="month-screenshots-list"></div>
+          </div>
+        </div>
+        
+        <div id="screenshots-error" class="screenshots-error hidden">
+          <!-- Screenshots error messages will be displayed here -->
+        </div>
+      </div>
+    </div>
   </div>
-  
-  <div id="lastUpdatedTime"></div>
 
 </body>
 <script src="popup.js"></script>
