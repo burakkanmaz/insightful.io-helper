@@ -7,83 +7,22 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
       min-width: 480px;
-      min-height: 800px;
-      height: auto;
-      padding: 10px 15px;
+      height: 550px;
+      padding: 8px 12px;
       text-align: left;
       background-color: #f9f9f9;
       color: #333;
       margin: 0;
       overflow: hidden;
     }
-    h3#popupTitle {
-      color: #5e35b1;
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 5px;
-      text-align: center;
-    }
-    #userName {
-      font-size: 13px;
-      color: #424242;
-      margin-bottom: 15px;
-      text-align: center;
-    }
     
-    /* Tab Styles */
-    .tab-container {
-      margin-bottom: 15px;
-    }
-    .tab-buttons {
-      display: flex;
-      background-color: #fff;
-      border-radius: 8px 8px 0 0;
-      overflow: hidden;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .tab-button {
-      flex: 1;
-      padding: 12px 16px;
-      background-color: #f5f5f5;
-      border: none;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      color: #666;
-      transition: all 0.2s ease;
-    }
-    .tab-button:hover {
-      background-color: #e8e8e8;
-    }
-    .tab-button.active {
-      background-color: #5e35b1;
-      color: #fff;
-    }
-    .tab-content {
-      display: none;
-      background-color: #fff;
-      border-radius: 0 0 8px 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .tab-content.active {
-      display: block;
-    }
     
     .segment {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       background-color: #fff;
       border-radius: 8px;
-      padding: 12px;
+      padding: 10px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .segment-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #5e35b1;
-      margin-bottom: 10px;
-      text-align: center;
-      border-bottom: 2px solid #5e35b1;
-      padding-bottom: 5px;
     }
     .period-row {
       display: flex;
@@ -103,14 +42,16 @@
     .period-stats {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       flex: 1;
     }
     .stat-item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 50px;
+      flex: 1;
+      min-width: 0;
+      text-align: center;
     }
     .stat-label {
       font-size: 10px;
@@ -119,11 +60,13 @@
     }
     .stat-value {
       font-size: 12px;
-      font-weight: 500;
+      font-weight: normal;
       color: #333;
+      text-align: center;
     }
     .progress-container {
-      width: 80px;
+      width: 100%;
+      max-width: 80px;
       height: 6px;
       background-color: #e0e0e0;
       border-radius: 3px;
@@ -136,44 +79,25 @@
       border-radius: 3px;
       transition: width 0.3s ease;
     }
-    .progress-bar.over {
-      background-color: #4caf50;
+    
+    /* Progress bar colors based on percentage - Darker pastel colors */
+    .progress-bar.excellent {
+      background-color: #81c784; /* Darker Pastel Green - 90%+ */
     }
-    .progress-bar.behind {
-      background-color: #ff9800;
+    .progress-bar.good {
+      background-color: #ffd54f; /* Darker Pastel Yellow - 70-90% */
     }
-    .progress-bar.critical {
-      background-color: #f44336;
+    .progress-bar.warning {
+      background-color: #ffb74d; /* Darker Pastel Orange - 50-70% */
+    }
+    .progress-bar.danger {
+      background-color: #ff6b6b; /* Reddish - 0-50% */
     }
     .progress-text {
       font-size: 10px;
       color: #666;
       text-align: center;
       margin-top: 2px;
-    }
-    .status-indicator {
-      font-size: 10px;
-      font-weight: 500;
-      padding: 2px 6px;
-      border-radius: 10px;
-      text-align: center;
-      min-width: 40px;
-    }
-    .status-on-track {
-      background-color: #e8f5e8;
-      color: #4caf50;
-    }
-    .status-behind {
-      background-color: #fff3e0;
-      color: #ff9800;
-    }
-    .status-critical {
-      background-color: #ffebee;
-      color: #f44336;
-    }
-    .status-ahead {
-      background-color: #e8f5e8;
-      color: #4caf50;
     }
     .loading {
       margin-top: 25px;
@@ -193,115 +117,223 @@
     .hidden {
       display: none;
     }
-    #openDashboardButtonContainer {
-      text-align: center;
-      margin-top: 15px;
-      margin-bottom: 10px;
-    }
-    #openDashboardLink {
-      display: inline-block;
-      background-color: #5e35b1;
-      color: #ffffff;
-      padding: 8px 16px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 13px;
-      border-radius: 4px;
-      transition: background-color 0.2s ease-in-out;
-    }
-    #openDashboardLink:hover {
-      background-color: #4527a0;
-    }
-    #lastUpdatedTime {
-      font-size: 11px;
-      color: #757575;
-      margin-top: 10px;
-      text-align: center;
-    }
-    .projection-info {
-      font-size: 10px;
-      color: #666;
-      margin-top: 5px;
-      text-align: center;
-      font-style: italic;
-    }
     
-    /* Screenshots Tab Styles */
-    .screenshots-container {
-      padding: 15px;
-    }
-    .screenshot-period {
-      margin-bottom: 20px;
-    }
-    .screenshot-period-title {
-      font-size: 16px;
-      font-weight: 600;
-      color: #5e35b1;
-      margin-bottom: 10px;
-      text-align: center;
-      border-bottom: 2px solid #5e35b1;
-      padding-bottom: 5px;
-    }
-    .screenshot-group {
-      background-color: #f8f9fa;
-      border-radius: 6px;
-      padding: 10px;
-      margin-bottom: 8px;
-      border-left: 4px solid #5e35b1;
-    }
-    .screenshot-group-header {
+    /* Summary Segment Styles */
+    .summary-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 5px;
+      padding: 8px 12px;
     }
-    .screenshot-title {
-      font-weight: 500;
+    .summary-item {
+      flex: 1;
+      text-align: center;
+    }
+    .summary-item:last-child {
+      text-align: right;
+      flex: 0 0 auto;
+    }
+    .summary-item:first-child {
+      text-align: left;
+    }
+    .summary-status {
+      font-weight: bold;
+    }
+    .summary-status .time {
+      font-weight: normal;
+    }
+    .summary-spacer {
+      margin: 0 10px;
+    }
+    .money-controls {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: flex-end;
+    }
+    .money-toggle {
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background-color: #f5f5f5;
+      transition: all 0.2s ease;
+      user-select: none;
+      display: inline-block;
+    }
+    .options-button {
+      cursor: pointer;
+      padding: 4px 6px;
+      border-radius: 4px;
+      background-color: #e0e0e0;
+      transition: all 0.2s ease;
+      user-select: none;
+      display: inline-block;
+      font-size: 12px;
+    }
+    .options-button:hover {
+      background-color: #d0d0d0;
+    }
+    .money-toggle:hover {
+      background-color: #e8e8e8;
+    }
+    .money-toggle.active {
+      background-color: #e8f5e8;
+    }
+    .money-icon {
+      font-size: 16px;
+      font-weight: bold;
+      color: #666;
+      transition: color 0.2s ease;
+    }
+    .options-icon {
+      font-size: 14px;
+      color: #666;
+      transition: color 0.2s ease;
+    }
+    
+    /* Custom Icons */
+    .money-icon::before {
+      content: "💲";
+      font-size: 16px;
+    }
+    .options-icon::before {
+      content: "⚒️";
+      font-size: 14px;
+    }
+    .money-toggle.active .money-icon {
+      color: #4caf50;
+    }
+    
+    /* Options Popup Styles */
+    .options-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      padding: 20px;
+      z-index: 1000;
+      min-width: 300px;
+      max-width: 90vw;
+      box-sizing: border-box;
+    }
+    .options-popup h3 {
+      margin: 0 0 15px 0;
       color: #333;
-      font-size: 13px;
+      font-size: 16px;
     }
-    .screenshot-count {
+    .options-popup label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+      color: #555;
+    }
+    .options-popup input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      max-width: 100%;
+    }
+    .options-popup .buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+    .options-popup button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .options-popup .save-btn {
       background-color: #5e35b1;
       color: white;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-size: 11px;
+    }
+    .options-popup .cancel-btn {
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .options-popup .save-btn:hover {
+      background-color: #4527a0;
+    }
+    .options-popup .cancel-btn:hover {
+      background-color: #e0e0e0;
+    }
+    .options-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+    .money-value {
+      font-size: 12px;
       font-weight: 500;
-    }
-    .screenshot-last-date {
-      font-size: 11px;
-      color: #666;
-      font-style: italic;
-    }
-    .screenshots-loading {
+      color: #333;
       text-align: center;
-      padding: 20px;
-      color: #666;
     }
-    .screenshots-error {
-      color: #c62828;
-      background-color: #ffcdd2;
-      padding: 10px;
-      border-radius: 4px;
-      font-size: 13px;
+    
+    /* Hide money column by default */
+    .money-column {
+      display: none;
+    }
+    .stats-header .header-item:last-child {
+      display: none;
+    }
+    
+    /* Stats Header Styles */
+    .stats-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+    .header-item {
+      flex: 1;
       text-align: center;
-      margin: 10px;
+      font-size: 12px;
     }
+    
   </style>
 </head>
 <body>
-  <h3 id="popupTitle">Insightful.io Helper</h3>
-  <div id="userName">-</div>
-
-  <!-- Tab Container -->
-  <div class="tab-container">
-    <div class="tab-buttons">
-      <button class="tab-button active" data-tab="stats">Stats</button>
-      <button class="tab-button" data-tab="screenshots">Screenshots</button>
+  <!-- Summary Segment -->
+  <div class="segment">
+    <div class="summary-content">
+      <div class="summary-item">
+        <span class="summary-status" id="summaryStatus">-</span>
+        <span class="summary-spacer">|</span>
+        <span id="summaryWorkdays">-</span>
+      </div>
+      <div class="summary-item">
+        <div class="money-controls">
+          <div class="money-toggle" id="moneyToggle">
+            <span class="money-icon"></span>
+          </div>
+          <div class="options-button" id="optionsButton">
+            <span class="options-icon"></span>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <!-- Stats Tab Content -->
-    <div id="stats-tab" class="tab-content active">
+  </div>
+
+  <!-- Stats Content -->
+  <div id="stats-tab">
       <div id="loading" class="loading">
         Loading data...
       </div>
@@ -309,32 +341,34 @@
       <div id="statsContainer" class="hidden">
         <!-- Daily Segment -->
         <div class="segment">
-          <div class="segment-title">Daily</div>
+          <div class="stats-header">
+            <div class="header-item"></div>
+            <div class="header-item">Worked</div>
+            <div class="header-item">Idle</div>
+            <div class="header-item">Remaining</div>
+            <div class="header-item">Progress</div>
+            <div class="header-item">Money</div>
+          </div>
           <div class="period-row">
             <div class="period-name">Today</div>
             <div class="period-stats">
               <div class="stat-item">
-                <div class="stat-label">Worked</div>
                 <div class="stat-value" id="todayWork">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Idle</div>
                 <div class="stat-value" id="todayIdle">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Remaining</div>
                 <div class="stat-value" id="todayRemaining">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Progress</div>
                 <div class="progress-container">
                   <div class="progress-bar" id="todayProgressBar"></div>
                 </div>
                 <div class="progress-text" id="todayProgressText">-</div>
               </div>
-              <div class="stat-item">
-                <div class="stat-label">Status</div>
-                <div class="status-indicator" id="todayStatus">-</div>
+              <div class="stat-item money-column">
+                <div class="stat-value" id="todayMoney">-</div>
               </div>
             </div>
           </div>
@@ -342,27 +376,22 @@
             <div class="period-name">Yesterday</div>
             <div class="period-stats">
               <div class="stat-item">
-                <div class="stat-label">Worked</div>
                 <div class="stat-value" id="yesterdayWork">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Idle</div>
                 <div class="stat-value" id="yesterdayIdle">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Target</div>
-                <div class="stat-value">8h</div>
+                <div class="stat-value" id="yesterdayRemaining">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Progress</div>
                 <div class="progress-container">
                   <div class="progress-bar" id="yesterdayProgressBar"></div>
                 </div>
                 <div class="progress-text" id="yesterdayProgressText">-</div>
               </div>
-              <div class="stat-item">
-                <div class="stat-label">Status</div>
-                <div class="status-indicator" id="yesterdayStatus">-</div>
+              <div class="stat-item money-column">
+                <div class="stat-value" id="yesterdayMoney">-</div>
               </div>
             </div>
           </div>
@@ -370,116 +399,147 @@
 
         <!-- Weekly Segment -->
         <div class="segment">
-          <div class="segment-title">Weekly</div>
+          <div class="stats-header">
+            <div class="header-item"></div>
+            <div class="header-item">Worked</div>
+            <div class="header-item">Idle</div>
+            <div class="header-item">Remaining</div>
+            <div class="header-item">Progress</div>
+            <div class="header-item">Money</div>
+          </div>
           <div class="period-row">
             <div class="period-name">This Week</div>
             <div class="period-stats">
               <div class="stat-item">
-                <div class="stat-label">Worked</div>
                 <div class="stat-value" id="weekWork">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Idle</div>
                 <div class="stat-value" id="weekIdle">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Remaining</div>
                 <div class="stat-value" id="weekRemaining">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Progress</div>
                 <div class="progress-container">
                   <div class="progress-bar" id="weekProgressBar"></div>
                 </div>
                 <div class="progress-text" id="weekProgressText">-</div>
               </div>
-              <div class="stat-item">
-                <div class="stat-label">Status</div>
-                <div class="status-indicator" id="weekStatus">-</div>
+              <div class="stat-item money-column">
+                <div class="stat-value" id="weekMoney">-</div>
               </div>
             </div>
           </div>
-          <div class="projection-info" id="weekProjection">-</div>
-          <div class="projection-info" id="weekCapacityGap" style="margin-top: 5px; font-weight: 500;">-</div>
+          <div class="period-row">
+            <div class="period-name">Last Week</div>
+            <div class="period-stats">
+              <div class="stat-item">
+                <div class="stat-value" id="lastWeekWork">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="lastWeekIdle">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="lastWeekRemaining">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="progress-container">
+                  <div class="progress-bar" id="lastWeekProgressBar"></div>
+                </div>
+                <div class="progress-text" id="lastWeekProgressText">-</div>
+              </div>
+              <div class="stat-item money-column">
+                <div class="stat-value" id="lastWeekMoney">-</div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Monthly Segment -->
         <div class="segment">
-          <div class="segment-title">Monthly</div>
+          <div class="stats-header">
+            <div class="header-item"></div>
+            <div class="header-item">Worked</div>
+            <div class="header-item">Idle</div>
+            <div class="header-item">Remaining</div>
+            <div class="header-item">Total</div>
+            <div class="header-item">Progress</div>
+            <div class="header-item">Money</div>
+          </div>
           <div class="period-row">
             <div class="period-name">This Month</div>
             <div class="period-stats">
               <div class="stat-item">
-                <div class="stat-label">Worked</div>
                 <div class="stat-value" id="monthWork">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Idle</div>
                 <div class="stat-value" id="monthIdle">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Remaining</div>
                 <div class="stat-value" id="monthRemaining">-</div>
               </div>
               <div class="stat-item">
-                <div class="stat-label">Progress</div>
+                <div class="stat-value" id="monthTotal">-</div>
+              </div>
+              <div class="stat-item">
                 <div class="progress-container">
                   <div class="progress-bar" id="monthProgressBar"></div>
                 </div>
                 <div class="progress-text" id="monthProgressText">-</div>
               </div>
-              <div class="stat-item">
-                <div class="stat-label">Status</div>
-                <div class="status-indicator" id="monthStatus">-</div>
+              <div class="stat-item money-column">
+                <div class="stat-value" id="monthMoney">-</div>
               </div>
             </div>
           </div>
-          <div class="projection-info" id="monthProjection">-</div>
-          <div class="projection-info" id="monthCapacityGap" style="margin-top: 5px; font-weight: 500;">-</div>
+          <div class="period-row">
+            <div class="period-name">Last Month</div>
+            <div class="period-stats">
+              <div class="stat-item">
+                <div class="stat-value" id="lastMonthWork">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="lastMonthIdle">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="lastMonthRemaining">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value" id="lastMonthTotal">-</div>
+              </div>
+              <div class="stat-item">
+                <div class="progress-container">
+                  <div class="progress-bar" id="lastMonthProgressBar"></div>
+                </div>
+                <div class="progress-text" id="lastMonthProgressText">-</div>
+              </div>
+              <div class="stat-item money-column">
+                <div class="stat-value" id="lastMonthMoney">-</div>
+              </div>
+            </div>
+          </div>
         </div>
+
       </div>
 
       <div id="errorMessage" class="error hidden">
         <!-- Error messages will be displayed here -->
       </div>
 
-      <div id="openDashboardButtonContainer">
-        <a href="#" id="openDashboardLink">Open Dashboard</a>
-      </div>
-      
-      <div id="lastUpdatedTime"></div>
     </div>
-    
-    <!-- Screenshots Tab Content -->
-    <div id="screenshots-tab" class="tab-content">
-      <div class="screenshots-container">
-        <div id="screenshots-loading" class="screenshots-loading">
-          Loading screenshots...
-        </div>
-        
-        <div id="screenshots-content" class="hidden">
-          <div id="today-screenshots" class="screenshot-period">
-            <div class="screenshot-period-title">Today</div>
-            <div id="today-screenshots-list"></div>
-          </div>
-          
-          <div id="week-screenshots" class="screenshot-period">
-            <div class="screenshot-period-title">This Week</div>
-            <div id="week-screenshots-list"></div>
-          </div>
-          
-          <div id="month-screenshots" class="screenshot-period">
-            <div class="screenshot-period-title">This Month</div>
-            <div id="month-screenshots-list"></div>
-          </div>
-        </div>
-        
-        <div id="screenshots-error" class="screenshots-error hidden">
-          <!-- Screenshots error messages will be displayed here -->
+
+    <!-- Options Popup -->
+    <div id="optionsOverlay" class="options-overlay hidden">
+      <div class="options-popup">
+        <h3>Hourly Rate Settings</h3>
+        <label for="hourlyRateInput">Hourly Rate ($):</label>
+        <input type="number" id="hourlyRateInput" placeholder="Enter hourly rate" min="0" step="0.01">
+        <div class="buttons">
+          <button class="cancel-btn" id="cancelOptions">Cancel</button>
+          <button class="save-btn" id="saveOptions">Save</button>
         </div>
       </div>
     </div>
-  </div>
 
 </body>
 <script src="popup.js"></script>
